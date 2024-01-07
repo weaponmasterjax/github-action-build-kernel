@@ -29,7 +29,7 @@ jobs:
         sudo -i
         cd $GITHUB_WORKSPACE
         chmod -R 0777  llvm
-        git clone https://github.com/Xiaomi-MT6833/kernel_xiaomi_evergo
+        git clone https://github.com/weaponmasterjax/evergo_kernel_rc kernel_xiaomi_evergo
         mv kernel_xiaomi_evergo android_kernel_xiaomi_evergo
         cd android_kernel_xiaomi_evergo
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
@@ -37,6 +37,8 @@ jobs:
         echo "CONFIG_HAVE_KPROBES=y" >>arch/arm64/configs/evergo_defconfig
         echo "CONFIG_KPROBE_EVENTS=y" >>arch/arm64/configs/evergo_defconfig
         echo "CONFIG_MODULES=y" >>arch/arm64/configs/evergo_defconfig
+        echo "CONFIG_KALLSYMS=y" >>arch/arm64/configs/evergo_defconfig
+        echo "CONFIG_KALLSYMS_ALL=y" >>arch/arm64/configs/evergo_defconfig
    
     - name: Build Kernel
       working-directory: android_kernel_xiaomi_evergo
@@ -66,7 +68,7 @@ jobs:
       with:
         name: Image.gz
         path: /home/runner/work/github-action-build-kernel/github-action-build-kernel/android_kernel_xiaomi_evergo/out/arch/arm64/boot/Image.gz
-    - name: Upload Anykernel3_cannon
+    - name: Upload Anykernel3_evergo
       uses: actions/upload-artifact@v3
       with:
         name: Anykernel3_cannon
