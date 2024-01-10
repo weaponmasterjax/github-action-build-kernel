@@ -41,6 +41,7 @@ jobs:
     - name: Build Kernel
       working-directory: android_kernel_xiaomi_evergo
       run: |
+       export USE_CCACHE=1
        bash build.sh
     - name: check
       run: |
