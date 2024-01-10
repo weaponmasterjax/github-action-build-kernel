@@ -23,6 +23,10 @@ jobs:
          sudo apt install gcc-aarch64-linux-gnu
          sudo apt install  python2 dh-python python-is-python3
          sudo apt install binutils make  libssl-dev build-essential bc  bison flex unzip libssl-dev ca-certificates xz-utils mkbootimg cpio device-tree-compiler git ccache
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+         create-symlink: true
 
     - name: Download kernel source and kernel su 
       run: |
