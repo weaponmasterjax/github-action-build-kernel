@@ -66,7 +66,7 @@ jobs:
     - name: Upload Anykernel3_evergo
       uses: actions/upload-artifact@v3
       with:
-        name: Anykernel3_cannon
+        name: Anykernel3_evergo
         path: /home/runner/work/github-action-build-kernel/github-action-build-kernel/AnyKernel3_evergo
     - name: Setup tmate session
       if: ${{ failure() }}
