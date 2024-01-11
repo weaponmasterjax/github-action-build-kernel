@@ -34,7 +34,7 @@ jobs:
         cd $GITHUB_WORKSPACE
         chmod -R 0777  llvm
         git clone https://github.com/weaponmasterjax/kernel_xiaomi_mt6833 -b fixup-r
-        mv kernel_xiaomi_evergo android_kernel_xiaomi_evergo
+        mv kernel_xiaomi_mt6833 android_kernel_xiaomi_evergo
         cd android_kernel_xiaomi_evergo
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
    
@@ -66,7 +66,7 @@ jobs:
     - name: Upload Anykernel3_evergo
       uses: actions/upload-artifact@v3
       with:
-        name: Anykernel3_cannon
+        name: Anykernel3_evergo
         path: /home/runner/work/github-action-build-kernel/github-action-build-kernel/AnyKernel3_evergo
     - name: Setup tmate session
       if: ${{ failure() }}
