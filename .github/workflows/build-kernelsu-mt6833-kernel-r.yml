@@ -1,4 +1,4 @@
-name: Build-evergo-Kernelsu-r
+name: Build-mt6833-Kernelsu-r
 on:
   workflow_dispatch:
 jobs:
