@@ -1,0 +1,75 @@
+name: Build-evergo-Kernelsu-r
+on:
+  workflow_dispatch:
+jobs:
+  build:
+
+   
+    name: Build evergo_Kernelsu_kernel-${{ matrix.version }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install LLVM and Clang
+      uses: KyleMayes/install-llvm-action@v1
+      with:
+         version: "12.0"
+
+
+    - name: install dependencies
+      run: |
+         sudo apt update -y 
+
+         sudo apt install gcc-aarch64-linux-gnu
+         sudo apt install  python2 dh-python python-is-python3
+         sudo apt install binutils make  libssl-dev build-essential bc  bison flex unzip libssl-dev ca-certificates xz-utils mkbootimg cpio device-tree-compiler git ccache
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1.2
+      with:
+         create-symlink: true
+
+    - name: Download kernel source and kernel su 
+      run: |
+        sudo -i
+        cd $GITHUB_WORKSPACE
+        chmod -R 0777  llvm
+        git clone https://github.com/weaponmasterjax/kernel_xiaomi_mt6833 -b fixup-r
+        mv kernel_xiaomi_evergo android_kernel_xiaomi_evergo
+        cd android_kernel_xiaomi_evergo
+        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
+   
+    - name: Build Kernel
+      working-directory: android_kernel_xiaomi_evergo
+      run: |
+       export USE_CCACHE=1
+       bash build.sh
+    - name: check
+      run: |
+       cd /home/runner/work/github-action-build-kernel/github-action-build-kernel/android_kernel_xiaomi_evergo/out/arch/arm64/boot/
+       ls
+    - name: pack Image.gz with Anykernel3
+      run: |
+        cd  $GITHUB_WORKSPACE
+        git clone https://github.com/chen2021-web/AnyKernel3_evergo.git
+        cd AnyKernel3_evergo
+        cp ../android_kernel_xiaomi_evergo/out/arch/arm64/boot/Image.gz ./
+    - name: Upload boot directory
+      uses: actions/upload-artifact@v3
+      with:
+        name: boot
+        path: /home/runner/work/github-action-build-kernel/github-action-build-kernel/android_kernel_xiaomi_evergo/out/arch/arm64/boot
+    - name: Upload Image.gz file
+      uses: actions/upload-artifact@v3
+      with:
+        name: Image.gz
+        path: /home/runner/work/github-action-build-kernel/github-action-build-kernel/android_kernel_xiaomi_evergo/out/arch/arm64/boot/Image.gz
+    - name: Upload Anykernel3_evergo
+      uses: actions/upload-artifact@v3
+      with:
+        name: Anykernel3_cannon
+        path: /home/runner/work/github-action-build-kernel/github-action-build-kernel/AnyKernel3_evergo
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+      with:
+        detached: true
