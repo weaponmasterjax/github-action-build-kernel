@@ -37,7 +37,11 @@ jobs:
         mv kernel_xiaomi_mt6833 android_kernel_xiaomi_evergo
         cd android_kernel_xiaomi_evergo
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
-   
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        detached: true
+        
     - name: Build Kernel
       working-directory: android_kernel_xiaomi_evergo
       run: |
@@ -68,8 +72,3 @@ jobs:
       with:
         name: Anykernel3_evergo
         path: /home/runner/work/github-action-build-kernel/github-action-build-kernel/AnyKernel3_evergo
-    - name: Setup tmate session
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
-      with:
-        detached: true
