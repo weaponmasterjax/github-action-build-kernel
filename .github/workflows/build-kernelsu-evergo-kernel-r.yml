@@ -73,3 +73,4 @@ jobs:
       uses: mxschmitt/action-tmate@v3
       with:
         detached: true
+        limit-access-to-actor: false
