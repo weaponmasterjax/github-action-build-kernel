@@ -36,6 +36,9 @@ jobs:
         git clone https://github.com/weaponmasterjax/kernel_xiaomi_evergo.git -b ksu-fixup 
         mv kernel_xiaomi_evergo android_kernel_xiaomi_evergo
         cd android_kernel_xiaomi_evergo
+        echo "CONFIG_KALLSYMS=y" >>arch/arm64/configs/evergo_defconfig
+        echo "CONFIG_KALLSYMS_ALL=y" >>arch/arm64/configs/evergo_defconfig
+        
     - name: Build Kernel
       working-directory: android_kernel_xiaomi_evergo
       run: |
