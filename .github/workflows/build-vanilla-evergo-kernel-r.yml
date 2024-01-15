@@ -1,4 +1,4 @@
-name: Build-evergo-Kernelsu-r
+name: Build-evergo-vanilla-r
 on:
   workflow_dispatch:
 jobs:
@@ -36,8 +36,6 @@ jobs:
         git clone https://github.com/weaponmasterjax/kernel_xiaomi_evergo.git -b ksu-fixup 
         mv kernel_xiaomi_evergo android_kernel_xiaomi_evergo
         cd android_kernel_xiaomi_evergo
-        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
-   
     - name: Build Kernel
       working-directory: android_kernel_xiaomi_evergo
       run: |
