@@ -36,7 +36,7 @@ jobs:
         git clone https://github.com/weaponmasterjax/kernel_xiaomi_evergo.git -b ksu-fixup 
         mv kernel_xiaomi_evergo android_kernel_xiaomi_evergo
         cd android_kernel_xiaomi_evergo
-        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash
         echo "CONFIG_KPROBES=y" >>arch/arm64/configs/evergo_defconfig
         echo "CONFIG_HAVE_KPROBES=y" >>arch/arm64/configs/evergo_defconfig
         echo "CONFIG_KPROBE_EVENTS=y" >>arch/arm64/configs/evergo_defconfig
